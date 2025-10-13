@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- Parent element for inheriting configuration -->
+    <parent>
+        <groupId>com.example</groupId> <!-- Parent groupId -->
+        <artifactId>parent-artifact</artifactId> <!-- Parent artifactId -->
+        <version>1.0.0</version> <!-- Parent version -->
+        <relativePath>../pom.xml</relativePath> <!-- Optional, relative path to the parent pom -->
+    </parent>
+
+    <!-- Project-specific elements -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId> <!-- Your project's groupId -->
+    <artifactId>module_a</artifactId> <!-- Your project's artifactId -->
+    <version>1.0.0</version> <!-- Your project's version -->
+    <packaging>jar</packaging> <!-- Packaging type (e.g., jar, war, etc.) -->
+
+    <name>My Project</name>
+    <description>A simple project example</description>
+
+    <!-- Properties -->
+    <properties>
+        <b>b</b> <!-- Define property 'a' -->
+    </properties><build>
+    <plugins>
+
+        <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.10.1</version>
+    <configuration>
+        <source>17</source> <!-- Specify your Java source version -->
+        <target>17</target> <!-- Specify your Java target version -->
+    </configuration>
+</plugin>
+    </plugins></build>
+</project>

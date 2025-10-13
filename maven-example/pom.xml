@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- Project-specific elements -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId> <!-- Your project's groupId -->
+    <artifactId>parent-artifact</artifactId> <!-- Your project's artifactId -->
+    <version>1.0.0</version> <!-- Your project's version -->
+    <packaging>pom</packaging> <!-- Packaging type (e.g., jar, war, etc.) -->
+
+    <name>My Project</name>
+    <description>A simple project example</description>
+
+    <!-- Properties -->
+    <properties>
+        <root>r</root> <!-- Define property 'a' -->
+    </properties>
+    <build>
+    <plugins>
+        <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>3.4.1</version>
+    <executions>
+        <execution>
+            <phase>package</phase>
+            <goals>
+                <goal>shade</goal>
+            </goals>
+            <configuration>
+                <createDependencyReducedPom>true</createDependencyReducedPom>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+    </plugins></build>
+</project>
