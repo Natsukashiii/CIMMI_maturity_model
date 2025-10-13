@@ -3,12 +3,13 @@ import os
 import pickle
 from collections import defaultdict
 from datetime import datetime
-from scipy.stats import spearmanr, kruskal
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import requests
 import seaborn as sns
 from dotenv import load_dotenv
+from scipy.stats import kruskal
 
 from src.python.entities.RateLimitException import RateLimitException
 from src.python.extractor.Utilities import (add_joker, get_lowest_level,
@@ -412,12 +413,15 @@ def generate_violin_plots():
         statistic, pvalue = kruskal(
             df[df["Maturity"] == "None"][attribute],
             df[df["Maturity"] == "Basic"][attribute],
-            df[df["Maturity"] == "Intermediate"][attribute]
+            df[df["Maturity"] == "Intermediate"][attribute],
         )
-        print(f"Kruskal-Wallis test for {attribute}: statistic={statistic:.3f}, p-value={pvalue:.4f}")
+        print(
+            f"Kruskal-Wallis test for {attribute}: statistic={statistic:.3f}, p-value={pvalue:.4f}"
+        )
 
     for attr in df.columns[2:7]:
         kruskal_attr(attr)
+
 
 def generate_top_bottom_plot():
     df = get_maturity_df()
