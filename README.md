@@ -3,6 +3,8 @@
 This repository includes the extractor and analysis processe/ survey results used in of CI/CD automation maturity project.
 
 ## 📁 Repository Structure
+
+```text
 ├── data/                   # Processed data
 ├── maven-example/          # Example Maven dependencies
 ├── src/
@@ -16,7 +18,6 @@ This repository includes the extractor and analysis processe/ survey results use
 ├── LICENSE
 ├── requirements.txt         # Python dependencies
 └── README.md
-
 ---
 
 ## 🔍 Overview
