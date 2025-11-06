@@ -1,0 +1,11 @@
+maven-example/.DS_Store
+.DS_Store
+.DS_Store
+/src/python/integrate/__pycache__
+/src/python/entities/__pycache__
+/resolver/effectivePoms
+/src/python/extractor/__pycache__
+/src/python/results/__pycache__
+data/plugins.json
+/src/java/resolver/target/classes
+/src/java/resolver/target

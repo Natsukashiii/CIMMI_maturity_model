@@ -110,6 +110,19 @@ class AutomationExtractor:
 
         print(self.automations_dict[Invalid])
         return len(repos)
+    
+
+    # === extract from a single repo {repo_path: [Action/Uses/Run/...]} ===
+def parse_repo_workflows(repo_path: str):
+    import os
+    ae = AutomationExtractor(save_path="")
+    workflows_dir = os.path.join(repo_path, ".github", "workflows")
+    if not os.path.isdir(workflows_dir):
+        return {repo_path: []}
+    for fn in os.listdir(workflows_dir):
+        if fn.endswith((".yml", ".yaml")):
+            ae.analyze_workflow(repo_path, os.path.join(workflows_dir, fn))
+    return {repo_path: ae.repos_dict.get(repo_path, [])}
 
 
 if __name__ == "__main__":
