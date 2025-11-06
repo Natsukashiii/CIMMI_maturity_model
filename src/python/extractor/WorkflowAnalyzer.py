@@ -110,11 +110,13 @@ class AutomationExtractor:
 
         print(self.automations_dict[Invalid])
         return len(repos)
-    
 
     # === extract from a single repo {repo_path: [Action/Uses/Run/...]} ===
+
+
 def parse_repo_workflows(repo_path: str):
     import os
+
     ae = AutomationExtractor(save_path="")
     workflows_dir = os.path.join(repo_path, ".github", "workflows")
     if not os.path.isdir(workflows_dir):

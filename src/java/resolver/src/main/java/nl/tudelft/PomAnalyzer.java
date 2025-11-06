@@ -16,14 +16,13 @@ public class PomAnalyzer {
   static HashSet<String> repositoriesSet;
 
   public static void main(String[] args) throws IOException {
-  // Handle single repository analysis
+    // Handle single repository analysis
     if (args.length >= 2 && args[0].equals("single")) {
-    String repoPath = args[1];
-    Map<String, List<String>> single = analyzeSingleRepo(repoPath);
-    System.out.println(new Gson().toJson(single));
-    return;
-  }
-
+      String repoPath = args[1];
+      Map<String, List<String>> single = analyzeSingleRepo(repoPath);
+      System.out.println(new Gson().toJson(single));
+      return;
+    }
 
     if (args.length < 1
         || (!args[0].equals("linux")
@@ -205,12 +204,12 @@ public class PomAnalyzer {
     }
   }
 
-// Analyze a single repository and return the mapping
+  // Analyze a single repository and return the mapping
   private static Map<String, List<String>> analyzeSingleRepo(String repoAbsPath) {
     reposPerPlugin = new HashMap<>();
     repositoriesSet = new HashSet<>();
     File repo = new File(repoAbsPath);
-    String repoKey = repo.getAbsolutePath(); 
+    String repoKey = repo.getAbsolutePath();
     if (searchForPom(repo, repoKey)) {
       repositoriesSet.add(repoKey);
     }
@@ -225,8 +224,4 @@ public class PomAnalyzer {
     }
     return reversedMap;
   }
-
-
-
-
 }

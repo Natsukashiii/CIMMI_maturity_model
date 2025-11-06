@@ -14,13 +14,9 @@ if _PY_ROOT not in sys.path:
 
 # --- Maturity calculation utilities ---
 from src.python.extractor.Utilities import \
-    add_joker  # correction based on "joker" logic
-from src.python.extractor.Utilities import \
-    get_lowest_level  # repo-level maturity (0..3)
-from src.python.extractor.Utilities import \
     get_maturity_levels  # {DomainObj: Level}
-from src.python.extractor.Utilities import \
-    get_report_per_level  # {Domain: {Level: {"Yes": [...], "No": [...]}}}
+from src.python.extractor.Utilities import (  # correction based on "joker" logic; repo-level maturity (0..3); {Domain: {Level: {"Yes": [...], "No": [...]}}}
+    add_joker, get_lowest_level, get_report_per_level)
 # --- Core logic reuse ---
 from src.python.extractor.WorkflowAnalyzer import parse_repo_workflows
 from src.python.integrate.pom_bridge import analyze_pom_single_repo
@@ -28,6 +24,7 @@ from src.python.results.AutomationReporter import (
     check_and_report_automations, parse_markdown_to_domain)
 
 # ---------- Helpers ----------
+
 
 def _project_root() -> str:
     """Find project root (contains data/automations.md)."""
@@ -37,11 +34,16 @@ def _project_root() -> str:
         os.path.abspath(os.path.join(_THIS_DIR, "..", "..", "..", "..")),
     ]
     for base in candidates:
-        for root in (base, os.path.dirname(base), os.path.dirname(os.path.dirname(base))):
+        for root in (
+            base,
+            os.path.dirname(base),
+            os.path.dirname(os.path.dirname(base)),
+        ):
             data_md = os.path.join(root, "data", "automations.md")
             if os.path.exists(data_md):
                 return root
     return os.path.abspath(os.path.join(_THIS_DIR, "..", ".."))
+
 
 def _write_plugins_json(plugins_map: Dict[str, List[str]]) -> str:
     """Write plugins.json compatible with AutomationReporter.py."""
@@ -52,6 +54,7 @@ def _write_plugins_json(plugins_map: Dict[str, List[str]]) -> str:
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(plugins_map, f, ensure_ascii=False, indent=2)
     return out_path
+
 
 def _discover_workflow_files(repo_path: str) -> List[str]:
     """Find all workflow .yml/.yaml files."""
@@ -64,6 +67,7 @@ def _discover_workflow_files(repo_path: str) -> List[str]:
         if fn.lower().endswith((".yml", ".yaml"))
     ]
 
+
 def _has_pom(repo_path: str) -> Tuple[bool, Optional[str]]:
     """Check if repo contains a pom.xml."""
     for root, _dirs, files in os.walk(repo_path):
@@ -71,7 +75,10 @@ def _has_pom(repo_path: str) -> Tuple[bool, Optional[str]]:
             return True, os.path.join(root, "pom.xml")
     return False, None
 
-def _breakdown_by_level(repo_report: Dict[Any, Dict[Any, Dict[Any, str]]]) -> Dict[str, Dict[str, int]]:
+
+def _breakdown_by_level(
+    repo_report: Dict[Any, Dict[Any, Dict[Any, str]]],
+) -> Dict[str, Dict[str, int]]:
     """Count hits and totals for each maturity level."""
     stat = {
         "basic": {"hit": 0, "total": 0},
@@ -97,11 +104,13 @@ def _breakdown_by_level(repo_report: Dict[Any, Dict[Any, Dict[Any, str]]]) -> Di
                         stat[key]["hit"] += 1
     return stat
 
+
 # ---------- Main ----------
 
-def audit_repo(repo_path: str,
-               pom_jar: Optional[str] = None,
-               print_diag: bool = True) -> Dict[str, Any]:
+
+def audit_repo(
+    repo_path: str, pom_jar: Optional[str] = None, print_diag: bool = True
+) -> Dict[str, Any]:
     """
     Analyze a local repo and compute automation maturity.
     Returns:
@@ -168,7 +177,7 @@ def audit_repo(repo_path: str,
     maturity = {
         "score": float(overall_level_int),
         "level": _label_map.get(overall_level_int, "None"),
-        "method": maturity_method
+        "method": maturity_method,
     }
 
     domain_levels_pretty = {
@@ -196,14 +205,18 @@ def audit_repo(repo_path: str,
 
     if print_diag:
         print("[DIAG] analyzable_exists:", diagnostics["analyzable_exists"])
-        print("[DIAG] pom.exists / analyzed / plugin_count:",
-              diagnostics["pom"]["exists"],
-              diagnostics["pom"]["analyzed"],
-              diagnostics["pom"]["plugin_count"])
-        print("[DIAG] workflows.exists / files / instance_count:",
-              diagnostics["workflows"]["exists"],
-              len(diagnostics["workflows"]["files"]),
-              diagnostics["workflows"]["instance_count"])
+        print(
+            "[DIAG] pom.exists / analyzed / plugin_count:",
+            diagnostics["pom"]["exists"],
+            diagnostics["pom"]["analyzed"],
+            diagnostics["pom"]["plugin_count"],
+        )
+        print(
+            "[DIAG] workflows.exists / files / instance_count:",
+            diagnostics["workflows"]["exists"],
+            len(diagnostics["workflows"]["files"]),
+            diagnostics["workflows"]["instance_count"],
+        )
 
     return {
         "repo": repo_path,
